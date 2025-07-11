@@ -1,8 +1,4 @@
-Absolutely. Here’s your README.md, written in a tone that balances enthusiasm, honesty, and a faint whiff of danger—just like your launcher:
 
----
-
-````markdown
 # 🌀 NeoVision Overdrive
 
 A **cyberpunk-themed retro game launcher** written entirely in Python.
