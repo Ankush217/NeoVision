@@ -15,8 +15,48 @@ ROM_EXTENSIONS = (
     ".gb", ".gbc", ".nes", ".gba", ".nds", ".cue", ".a26", ".gcm",
     ".nkit.iso", ".wbfs", ".3ds", ".iso", ".cso", ".gcz"
 )
-ROM_FOLDER = "/Users/apple/Emu"
-COVERS_FOLDER = os.path.join(ROM_FOLDER, "covers")
+# --- Config ---
+DEFAULT_CONFIG = {
+    "rom_folder": os.path.expanduser("~/Emu"),
+    "covers_folder": "covers",
+    "ext_emu_dir": os.path.expanduser("~/Emu/ExtEmu"),
+    "fullscreen": True
+}
+
+def load_config():
+    config_path = "nv_config.json"
+    if not os.path.exists(config_path):
+        with open(config_path, "w") as f:
+            json.dump(DEFAULT_CONFIG, f, indent=2)
+            print("🛠️  Created default config at nv_config.json")
+        return DEFAULT_CONFIG.copy()
+    try:
+        with open(config_path, "r") as f:
+            loaded = json.load(f)
+            return {
+                "rom_folder": os.path.expanduser(loaded.get("rom_folder", DEFAULT_CONFIG["rom_folder"])),
+                "covers_folder": loaded.get("covers_folder", DEFAULT_CONFIG["covers_folder"]),
+                "ext_emu_dir": os.path.expanduser(loaded.get("ext_emu_dir", DEFAULT_CONFIG["ext_emu_dir"])),
+                "fullscreen": loaded.get("fullscreen", DEFAULT_CONFIG["fullscreen"])
+            }
+    except Exception as e:
+        print("⚠️ Error loading config, using defaults:", e)
+        return DEFAULT_CONFIG.copy()
+
+config = load_config()
+
+ROM_FOLDER = config["rom_folder"]
+COVERS_FOLDER = os.path.join(ROM_FOLDER, config["covers_folder"])
+EXT_EMU_DIR = config["ext_emu_dir"]
+
+root = tk.Tk()
+root.title("NeoVision Overdrive")
+if config["fullscreen"]:
+    root.attributes("-fullscreen", True)
+else:
+    root.geometry("1280x800")  # fallback
+root.configure(bg=BG_COLOR)
+
 THUMB_SIZE = (300, 300)
 BG_COLOR = "#0a0a1a"
 ACCENT_COLOR = "#00ffcc"
