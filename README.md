@@ -36,21 +36,20 @@ Designed for **macOS**. Runs like a dream, looks like a terminal from the year 2
 
 ---
 
-## 📁 Setup
+# 📁 Setup
 
 1. **Clone this repo.**
 
 2. **Install dependencies**:
-   ```bash
+
    pip install pygame pillow pyboy
-````
+
 
 3. **Create your ROM directory:**
    By default, this will be:
 
-   ```
    ~/Emu/
-   ```
+
 
 4. **Put your ROMs inside that folder.**
    Supported extensions:
