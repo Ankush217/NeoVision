@@ -13,9 +13,20 @@ def load_config():
     try:
         with open("nv_config.json", "r") as f:
             data = json.load(f)
-            return os.path.expanduser(data.get("ext_emu_dir", "~/Emu/ExtEmu"))
-    except:
-        return os.path.expanduser("~/Emu/ExtEmu")
+            return {
+                "ext_emu_dir": os.path.expanduser(data.get("ext_emu_dir", "~/Emu/ExtEmu")),
+                "rom_dir": os.path.expanduser(data.get("rom_folder", "~/Emu"))
+            }
+    except Exception as e:
+        print("⚠️ Failed to load config in emu.py:", e)
+        return {
+            "ext_emu_dir": os.path.expanduser("~/Emu/ExtEmu"),
+            "rom_dir": os.path.expanduser("~/Emu")
+        }
+
+config = load_config()
+EXT_EMU_DIR = config["ext_emu_dir"]
+ROM_DIR = config["rom_dir"]
 
 EXT_EMU_DIR = load_config()
 def smart_iso_emulator(rom):
