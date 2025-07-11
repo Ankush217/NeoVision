@@ -6,11 +6,18 @@ import subprocess
 import time
 from pyboy import PyBoy
 from pyboy.utils import WindowEvent
-
+import json
+import os
 # --- Constants ---
-ROM_DIR = "/Users/apple/Emu/"
-EXT_EMU_DIR = "/Users/apple/Emu/ExtEmu"
+def load_config():
+    try:
+        with open("nv_config.json", "r") as f:
+            data = json.load(f)
+            return os.path.expanduser(data.get("ext_emu_dir", "~/Emu/ExtEmu"))
+    except:
+        return os.path.expanduser("~/Emu/ExtEmu")
 
+EXT_EMU_DIR = load_config()
 def smart_iso_emulator(rom):
     rom_lc = rom.lower()
     wii_keywords = ["mario", "zelda", "metroid", "wii", "galaxy", "samus", "bowser", "nkit", "twilight", "resort", "donkey"]
